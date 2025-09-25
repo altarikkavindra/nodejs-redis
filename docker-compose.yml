@@ -33,7 +33,7 @@ services:
       - mynet
 
 volumes:
-  - redis_db:
+  redis_db:
 
 networks:
-  - mynet
+  mynet:
