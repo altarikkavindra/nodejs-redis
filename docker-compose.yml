@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: redis-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123
+    volumes:
+      - redis_db:/var/lib/mysql
+    networks:
+      - mynet
+
+  app:
+    build: .
+    container_name: redis-app
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "3004:3000"
+    networks:
+      - mynet
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    netowrks:
+      - mynet
+
+volumes:
+  - redis_db:
+
+networks:
+  - mynet
